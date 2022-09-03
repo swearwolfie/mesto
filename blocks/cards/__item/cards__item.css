@@ -1,0 +1,13 @@
+.cards__item {
+  width: 282px;
+  height: 361px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 910px) {
+  .cards__item {
+    width: 100%;
+    height: 530px;
+  }
+}
