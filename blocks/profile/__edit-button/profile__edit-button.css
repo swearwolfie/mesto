@@ -5,6 +5,16 @@
   align-self: flex-end;
   box-sizing: content-box;
   border-bottom: 10px solid black;
+  cursor: pointer;
+}
+
+.profile__edit-button:hover::after {
+  content: '';
+  background-color: black;
+  opacity: 0.4;
+  width: 24px;
+  height: 24px;
+  position: absolute;
 }
 
 @media screen and (max-width: 400px) {
@@ -13,5 +23,13 @@
     height: 18px;
     background-size: contain;
     border-bottom: 7px solid black;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .profile__edit-button:hover::after {
+    content: '';
+    width: 18px;
+    height: 18px;
   }
 }
