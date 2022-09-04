@@ -1,0 +1,18 @@
+.popup__submit {
+  background-image: url(../../../images/Submit-Button.svg);
+  width: 358px;
+  min-height: 50px;
+  cursor: pointer;
+  align-self: center;
+  margin-top: 48px;
+  border-radius: 5px;
+}
+
+.popup__submit:hover::after {
+  content: '';
+  background-color: #fff;
+  opacity: 0.2;
+  width: 358px;
+  height: 50px;
+  position: absolute;
+}
