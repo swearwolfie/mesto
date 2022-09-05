@@ -6,11 +6,6 @@
   cursor: pointer;
 }
 
-.popup__close-icon:hover::after {
-  content: '';
-  width: 32px;
-  height: 32px;
-  background-color: black;
-  opacity: 0.4;
-  position: absolute;
+.popup__close-icon:hover {
+  opacity: 0.6;
 }
