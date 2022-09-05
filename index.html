@@ -16,11 +16,11 @@
         <div class="profile__photo"></div>
         <div class="profile__container">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <div class="profile__edit-button"></div>
+          <a href="#" class="profile__edit-button"></a>
           <p class="profile__description">Исследователь океана</p>
         </div>
       </div>
-      <div class="profile__add-button"></div>
+      <a href="#" class="profile__add-button"></a>
     </section>
     <section class="cards">
       <div class="cards__item">
@@ -70,17 +70,17 @@
   <footer class="footer">
     <p class="footer__copyright">© 2022 Masha Soldatova</p>
   </footer>
-  <div class="popup popup_opened">
+  <form class="popup">
     <div class="popup__container">
       <div class="popup__close-icon"></div>
       <div class="popup__form">
         <h2 class="popup__edit">Редактировать профиль</h2>
-        <input type="text" class="popup__input popup__input_line_name" placeholder="Имя пользователя">
-        <input type="text" class="popup__input popup__input_line_description" placeholder="Описание">
-        <div class="popup__submit"></div>
+        <input type="text" class="popup__input popup__input_line_name">
+        <input type="text" class="popup__input popup__input_line_description">
+        <input class="popup__submit" type="submit" value=" "></ш>
       </div>
     </div>
-  </div>
+  </form>
   <script src="./pages/index.js"></script>
 </body>
 </html>

@@ -8,6 +8,7 @@
   border-radius: 5px;
 }
 
+/*
 .popup__submit:hover::after {
   content: '';
   background-color: #fff;
@@ -15,4 +16,8 @@
   width: 358px;
   height: 50px;
   position: absolute;
+} */
+
+.popup__submit:hover {
+  opacity: 0.8;
 }
