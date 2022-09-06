@@ -17,11 +17,11 @@
 }
 
 @media screen and (max-width: 768px) {
-  .profile__add-button { 
-  background-image: url(../../../images/AddButton.svg);  
-  width: 282px;
-  margin-top: 36px;
-}
+  .profile__add-button {
+    background-image: url(../../../images/AddButton.svg);
+    width: 282px;
+    margin-top: 36px;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -30,4 +30,3 @@
     width: 282px;
   }
 }
-
