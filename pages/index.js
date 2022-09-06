@@ -13,32 +13,37 @@ closeButton.addEventListener('click', function() {
 
 // ↑ выскакивание окошка
 
-
-let profileName = document.querySelector('.profile__name');
-let profileJob = document.querySelector('.profile__description');
-let nameInput = document.querySelector('.popup__input_line_name').value = profileName.textContent;
-let jobInput = document.querySelector('.popup__input_line_description').value = profileJob.textContent;
-
-// ↑ инпуты заполняются контентом профиля
-
-
-// let submitButton = document.querySelector('.popup__submit');
+let nameInput = document.querySelector('.popup__input_line_name');
+let jobInput = document.querySelector('.popup__input_line_description');
+let submitButton = document.querySelector('.popup__submit');
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
-  let nameInput = document.querySelector('.popup__input_line_name').value;
-  let jobInput = document.querySelector('.popup__input_line_description').value;
+  console.log(nameInput.value);
+  console.log(jobInput.value);
   // Получите значение полей jobInput и nameInput из свойства value
 
-  // let profileName = document.querySelector('.profile__name');
-  // let profileJob = document.querySelector('.profile__description');
+  let profileName = document.querySelector('.profile__name');
+  let profileJob = document.querySelector('.profile__description');
   // Выберите элементы, куда должны быть вставлены значения полей
 
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   // Вставьте новые значения с помощью textContent
+
 }
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler); 
+formElement.addEventListener('submit', formSubmitHandler);
+submitButton.addEventListener('click', function() {
+  formElement.classList.remove('popup_opened');
+});
+
+
+let profileName = document.querySelector('.profile__name');
+let profileJob = document.querySelector('.profile__description');
+let nameInputV = document.querySelector('.popup__input_line_name').value = profileName.textContent;
+let jobInputV = document.querySelector('.popup__input_line_description').value = profileJob.textContent;
+
+// ↑ инпуты заполняются контентом профиля
