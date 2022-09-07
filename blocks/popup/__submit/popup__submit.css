@@ -1,12 +1,13 @@
 .popup__submit {
-  background-image: url(../../../images/Submit-Button.svg);
   width: 358px;
   min-height: 50px;
   cursor: pointer;
   align-self: center;
   margin-top: 48px;
-  border-radius: 5px;
-  border: 1px solid black;
+  border-radius: 2px;
+  background-color: black;
+  border: 1px solid transparent;
+  color: #fff;
 }
 
 /*

@@ -1,15 +1,19 @@
 .profile__description {
   margin: 0px;
   padding: 0px;
-  font-family: 'Inter';
+  width: 100%;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   color: #FFF;
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 768px) {
   .profile__description {
     text-align: center;
   }

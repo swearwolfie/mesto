@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./pages/index.css">
-  <title>Mesto</title>
+  <title>Место</title>
 </head>
 <body class="page">
   <header class="header">
@@ -12,57 +12,55 @@
   </header>
   <main class="content">
     <section class="profile">
-      <div class="profile__info">
-        <div class="profile__photo"></div>
+        <img src="./images/Avatar.png" class="profile__photo" alt="аватар пользователя">
         <div class="profile__container">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <a href="#" class="profile__edit-button"></a>
+          <button class="profile__edit-button" type="button"></button>
           <p class="profile__description">Исследователь океана</p>
-        </div>
       </div>
-      <a href="#" class="profile__add-button"></a>
+      <button class="profile__add-button" type="button"></button>
     </section>
     <section class="cards">
       <div class="cards__item">
         <img src="./images/items/BigSur.jpg" class="cards__pic" alt="картинка природы">
         <div class="cards__info">
             <p class="cards__name">Биг Сур</p>
-            <div class="cards__like-button"></div>
+            <button class="cards__like-button" type="button"></button>
         </div>
       </div>
       <div class="cards__item">
         <img src="./images/items/GardenOfTheGods.jpg" class="cards__pic" alt="картинка природы">
         <div class="cards__info">
             <p class="cards__name">Сад Богов</p>
-            <div class="cards__like-button"></div>
+            <button class="cards__like-button" type="button"></button>
         </div>
       </div>
       <div class="cards__item">
         <img src="./images/items/NiagaraFalls.jpg" class="cards__pic" alt="картинка природы">
         <div class="cards__info">
             <p class="cards__name">Ниагарский водопад</p>
-            <div class="cards__like-button"></div>
+            <button class="cards__like-button" type="button"></button>
         </div>
       </div>
       <div class="cards__item">
         <img src="./images/items/SequoiaNationalPark.jpg" class="cards__pic" alt="картинка природы">
         <div class="cards__info">
             <p class="cards__name">Национальный парк Секвойя</p>
-            <div class="cards__like-button"></div>
+            <button class="cards__like-button" type="button"></button>
         </div>
       </div>
       <div class="cards__item">
         <img src="./images/items/GrandCanyon.jpg" class="cards__pic" alt="картинка природы">
         <div class="cards__info">
             <p class="cards__name">Гранд Каньон</p>
-            <div class="cards__like-button"></div>
+            <button class="cards__like-button" type="button"></button>
         </div>
       </div>
       <div class="cards__item">
         <img src="./images/items/GreatSmokyMountains.jpg" class="cards__pic" alt="картинка природы">
         <div class="cards__info">
             <p class="cards__name">Горы Грейт Смоуки</p>
-            <div class="cards__like-button"></div>
+            <button class="cards__like-button" type="button"></button>
         </div>
       </div>
     </section>
@@ -70,17 +68,17 @@
   <footer class="footer">
     <p class="footer__copyright">© 2022 Masha Soldatova</p>
   </footer>
-  <form class="popup">
+  <div class="popup">
     <div class="popup__container">
-      <div class="popup__close-icon"></div>
-      <div class="popup__form">
+      <button class="popup__close-icon" type="button"></button>
+      <form class="popup__form" name="submit-form">
         <h2 class="popup__edit">Редактировать профиль</h2>
-        <input type="text" class="popup__input popup__input_line_name">
-        <input type="text" class="popup__input popup__input_line_description">
-        <input class="popup__submit" type="submit" value=" ">
-      </div>
+        <input type="text" class="popup__input popup__input_line_name" name="submit-name">
+        <input type="text" class="popup__input popup__input_line_description" name="submit-description">
+        <button class="popup__submit" type="submit" value="Save">Сохранить</button>
+      </form>
     </div>
-  </form>
-  <script src="./pages/index.js"></script>
+  </div>
+  <script src="./scripts/index.js"></script>
 </body>
 </html>

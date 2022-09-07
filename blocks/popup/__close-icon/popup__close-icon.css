@@ -4,6 +4,11 @@
   height: 32px;
   align-self: flex-end;
   cursor: pointer;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  box-sizing: border-box;
+  background-size: contain;
+  border: 1px solid transparent;
 }
 
 .popup__close-icon:hover {
