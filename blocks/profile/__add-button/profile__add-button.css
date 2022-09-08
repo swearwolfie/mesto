@@ -9,8 +9,8 @@
   align-self: center;
   border: 2px solid #fff;
   border-radius: 2px;
-  align-self: center;
   cursor: pointer;
+  margin-left: auto;
 }
 
 
@@ -22,5 +22,6 @@
   .profile__add-button {
     width: 282px;
     margin-top: 36px;
+    margin-left: 0px;
   }
 }

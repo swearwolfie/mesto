@@ -1,7 +1,7 @@
 .profile__container {
-  width: 60%;
+  max-width: 60%;
   display: grid;
-  grid-template-columns: 80% min-content;
+  grid-template-columns: minmax(1%, 95%) min-content;
   row-gap: 8px;
   column-gap: 9px;
 }

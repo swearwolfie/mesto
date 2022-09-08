@@ -4,10 +4,17 @@
   cursor: pointer;
   align-self: center;
   margin-top: 48px;
+  margin-bottom: 37px;
   border-radius: 2px;
   background-color: black;
   border: 1px solid transparent;
   color: #fff;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
 }
 
 /*
@@ -22,4 +29,14 @@
 
 .popup__submit:hover {
   opacity: 0.8;
+}
+
+@media screen and (max-width: 510px) {
+  .popup__submit {
+    font-size: 14px;
+    line-height: 17px;
+    width: 238px;
+    margin-top: 45px;
+    margin-bottom: 25px;
+  }
 }
