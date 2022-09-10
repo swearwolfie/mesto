@@ -2,6 +2,7 @@
   margin: 0px;
   padding: 0px;
   width: 100%;
+  max-width: 336px;
   font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -13,9 +14,10 @@
   color: #FFF;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   .profile__description {
     text-align: center;
+    width: 100%;
   }
 }
 

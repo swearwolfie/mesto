@@ -6,7 +6,7 @@
   column-gap: 9px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   .profile__container {
     width: 80%;
     justify-items: center;

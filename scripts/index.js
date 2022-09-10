@@ -5,12 +5,11 @@ let profileName = document.querySelector('.profile__name');
 let profileJob = document.querySelector('.profile__description');
 let nameInput = document.querySelector('.popup__input_line_name');
 let jobInput = document.querySelector('.popup__input_line_description');
-let submitButton = document.querySelector('.popup__submit');
 
 function openPopup() {
   formElement.classList.add('popup_opened');
-  let nameInputV = document.querySelector('.popup__input_line_name').value = profileName.textContent;
-  let jobInputV = document.querySelector('.popup__input_line_description').value = profileJob.textContent;
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
 }
 
 function closePopup() {

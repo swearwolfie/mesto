@@ -11,9 +11,7 @@
   .popup__edit {
     font-size: 18px;
     line-height: 22px;
-    margin: 0px;
-    margin-top: 25px;
-    margin-bottom: 75px;
+    margin: 25px 0px 75px 0px;
     text-align: center;
   }
 }
