@@ -22,6 +22,7 @@
     </section>
     <section class="cards">
       <div class="cards__item">
+        <div class="cards__bin"></div>
         <img src="./images/items/BigSur.jpg" class="cards__pic" alt="Биг Сур, Калифорния, США">
         <div class="cards__info">
             <h2 class="cards__name">Биг Сур</h2>
@@ -29,6 +30,7 @@
         </div>
       </div>
       <div class="cards__item">
+        <div class="cards__bin"></div>
         <img src="./images/items/GardenOfTheGods.jpg" class="cards__pic" alt="Сад Богов, Колорадо, США">
         <div class="cards__info">
             <h2 class="cards__name">Сад Богов</h2>
@@ -36,6 +38,7 @@
         </div>
       </div>
       <div class="cards__item">
+        <div class="cards__bin"></div>
         <img src="./images/items/NiagaraFalls.jpg" class="cards__pic" alt="Ниагарский Водопад, Нью-Йорк, США">
         <div class="cards__info">
             <h2 class="cards__name">Ниагарский водопад</h2>
@@ -43,6 +46,7 @@
         </div>
       </div>
       <div class="cards__item">
+        <div class="cards__bin"></div>
         <img src="./images/items/SequoiaNationalPark.jpg" class="cards__pic" alt="Национальный парк Секвойя, Калифорния, США">
         <div class="cards__info">
             <h2 class="cards__name">Национальный парк Секвойя</h2>
@@ -50,6 +54,7 @@
         </div>
       </div>
       <div class="cards__item">
+        <div class="cards__bin"></div>
         <img src="./images/items/GrandCanyon.jpg" class="cards__pic" alt="Гранд Каньон, Аризона, США">
         <div class="cards__info">
             <h2 class="cards__name">Гранд Каньон</h2>
@@ -57,6 +62,7 @@
         </div>
       </div>
       <div class="cards__item">
+        <div class="cards__bin"></div>
         <img src="./images/items/GreatSmokyMountains.jpg" class="cards__pic" alt="Горы Грейт-Смоуки, Теннесси, США">
         <div class="cards__info">
             <h2 class="cards__name">Горы Грейт Смоуки</h2>
@@ -68,7 +74,7 @@
   <footer class="footer">
     <p class="footer__copyright">© 2022 Masha Soldatova</p>
   </footer>
-  <div class="popup">
+  <div class="popup popup_edit">
     <div class="popup__container">
       <button class="popup__close-icon" type="button" aria-label="закрыть"></button>
       <form class="popup__form" name="submit-form">
@@ -79,6 +85,32 @@
       </form>
     </div>
   </div>
+  <div class="popup popup_add">
+    <div class="popup__container">
+      <button class="popup__close-icon popup__close-icon_add" type="button" aria-label="закрыть"></button>
+      <form class="popup__form popup__form_add" name="submit-form">
+        <h2 class="popup__edit">Новое место</h2>
+        <input type="text" class="popup__input popup__input_add_name" name="submit-name" placeholder="Название">
+        <input type="text" class="popup__input popup__input_add_pic" name="submit-description" placeholder="Ссылка на картинку">
+        <button class="popup__submit" type="submit" value="Save">Добавить</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_pic">
+    <button class="popup__close-icon popup__close-icon_pic" type="button" aria-label="закрыть"></button>
+    <img class="popup__image"></img>
+    <h2 class="popup__description"></h2>
+  </div>
+  <template class="cards__item-template">
+    <div class="cards__item">
+      <div class="cards__bin"></div>
+      <img class="cards__pic"></img>
+      <div class="cards__info">
+        <h2 class="cards__name"></h2>
+        <button class="cards__like-button" type="button"></button>
+      </div>
+    </div>
+  </template>
   <script src="./scripts/index.js"></script>
 </body>
 </html>
