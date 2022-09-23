@@ -150,26 +150,34 @@ deleteCardButton.forEach(function(button) {
 
 // попап картинки
 
-const fullPicArr = Array.from(document.querySelectorAll('.cards__pic'));
-const fullPicNameArr = Array.from(document.querySelectorAll('.cards__name'));
+const cardsPic = document.querySelectorAll('.cards__pic');
+const cardsPicNameA = document.querySelectorAll('.cards__name');
 const popupPic = document.querySelector('.popup_pic');
 const popupImage = document.querySelector('.popup__image');
 const popupDescription = document.querySelector('.popup__description');
 const closePicButton = document.querySelector('.popup__close-icon_pic');
 
+function openPicPopup(eventTarget) {
+  popupPic.classList.add('popup_opened');
+  popupImage.src = eventTarget.src;
 
-function openPicPopup() {
-  popupPic.classList.add('.popup_opened');
-  popupImage.src = element.closest('.cards__pic').src;
-  popupDescription.textContent = element.closest('.cards__name').textContent;
-}
+  const container = eventTarget.closest('.cards__item');
+  popupDescription.textContent = container.querySelector('.cards__name').textContent; 
+} 
 
 function closePicPopup() {
-  popupPic.classList.remove('.popup_opened');
+  popupPic.classList.remove('popup_opened');
 }
 
-fullPicArr.forEach(function(element) {
-  element.addEventListener('click', () => {
-    popupPic.classList.add('.popup_opened');
-  });
-})
+cards.addEventListener('click', function(evt) {
+const eventTarget = evt.target;
+
+if (evt.target.classList != 'cards__pic') {
+  return console.log('не та область!')
+};
+
+openPicPopup(eventTarget);
+
+});
+
+closePicButton.addEventListener('click', closePicPopup);
