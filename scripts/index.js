@@ -116,6 +116,9 @@ popupAddForm.addEventListener('submit', (evt) => {
   addNewCard();
 
   closePopup(popupAdd);
+
+  cardNameInput.value = '';
+  cardPicInput.value = '';
 });
 
 // ↓ лайки и корзина для оригинальных карточек
