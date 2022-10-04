@@ -100,10 +100,11 @@ function handleFullPic(evt) {
   popupPicImage.alt = container.querySelector('.cards__name').textContent;
   openPopup(popupPic);
 
-  buttonClosePicPopup.addEventListener('click', () => {
-    closePopup(popupPic);
-  });
 }
+
+buttonClosePicPopup.addEventListener('click', () => {
+  closePopup(popupPic);
+});
 
 // ↓ ф-ция слушателей лайка и корзины
 
