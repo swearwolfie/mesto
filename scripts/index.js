@@ -20,10 +20,41 @@ const buttonClosePicPopup = document.querySelector('.popup__close-icon_pic');
 
 function openPopup(popupBase) {
   popupBase.classList.add('popup_opened');
+  document.addEventListener('keydown', keyHandler);
 }
 
 function closePopup(popupBase) {
   popupBase.classList.remove('popup_opened');
+  document.removeEventListener('keydown', keyHandler);
+}
+
+// ↓ закрытие через esc
+
+function keyHandler(evt) {
+  if (evt.key === 'Escape') {
+    closePopup(popupEdit);
+    closePopup(popupAdd);
+    closePopup(popupPic);
+  }
+};
+
+// ↓ закрытие при щелчке на оверлей
+
+const popupBaseArr = Array.from(document.querySelectorAll('.popup'));
+popupBaseArr.forEach((item) => { item.addEventListener('click', closePopupWithOverlay)
+} );
+
+
+function closePopupWithOverlay(evt) {
+  const eventTarget = evt.target;
+
+  if (evt.target.classList.contains ('popup')) {
+    closePopup(popupEdit);
+    closePopup(popupAdd);
+    closePopup(popupPic);
+  } else {
+    return console.log('не та область!');
+}
 }
 
 // ↓ выскакивание окошка edit
@@ -32,7 +63,11 @@ buttonEditProfile.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 
-openPopup(popupEdit);
+  openPopup(popupEdit);
+  /*
+  buttonSubmit.setAttribute('disabled', 'true');
+  buttonSubmit.classList.add('popup__submit_disabled');*/
+
 });
 
 buttonClosePopup.addEventListener('click', () => {
