@@ -20,7 +20,7 @@ const buttonClosePicPopup = document.querySelector('.popup__close-icon_pic');
 
 function openPopup(popupBase) {
   popupBase.classList.add('popup_opened');
-  document.addEventListener('keydown', keyHandler);
+  document.addEventListener('keydown', keyHandler)
 }
 
 function closePopup(popupBase) {
@@ -32,9 +32,8 @@ function closePopup(popupBase) {
 
 function keyHandler(evt) {
   if (evt.key === 'Escape') {
-    closePopup(popupEdit);
-    closePopup(popupAdd);
-    closePopup(popupPic);
+    const popupEscClose = document.querySelector('.popup_opened');
+    closePopup(popupEscClose);
   }
 };
 
@@ -49,9 +48,7 @@ function closePopupWithOverlay(evt) {
   const eventTarget = evt.target;
 
   if (evt.target.classList.contains ('popup')) {
-    closePopup(popupEdit);
-    closePopup(popupAdd);
-    closePopup(popupPic);
+    closePopup(evt.target);
   } else {
     return console.log('не та область!');
 }
@@ -64,10 +61,6 @@ buttonEditProfile.addEventListener('click', () => {
   jobInput.value = profileJob.textContent;
 
   openPopup(popupEdit);
-  /*
-  buttonSubmit.setAttribute('disabled', 'true');
-  buttonSubmit.classList.add('popup__submit_disabled');*/
-
 });
 
 buttonClosePopup.addEventListener('click', () => {
@@ -153,6 +146,12 @@ function setEventListeners(element) {
   const img = element.querySelector('.cards__pic');
   img.addEventListener('click', handleFullPic);
 } 
+  
+function buttonDisabled() {
+  const buttonSubmit = document.querySelector('.popup__submit_add');
+  buttonSubmit.setAttribute('disabled', 'true');
+  buttonSubmit.classList.add('popup__submit_disabled');
+};
 
 // ↓ ф-ция добавления карточки
 
@@ -165,7 +164,7 @@ function createNewCard(title, link) {
   addedCardName.textContent = title;
 
   setEventListeners(addedCardItem);
-  
+
   return addedCardItem;
 }
 
@@ -184,9 +183,10 @@ popupAddForm.addEventListener('submit', (evt) => {
   render(submittedName, submittedPic);
 
   closePopup(popupAdd);
-
+  buttonDisabled()
   cardNameInput.value = '';
   cardPicInput.value = '';
+
 });
 
 // ↓ лайки и корзина для оригинальных карточек из ПР4
