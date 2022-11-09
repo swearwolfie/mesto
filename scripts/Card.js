@@ -1,16 +1,9 @@
-import { openPopup } from './index.js'
-import { closePopup } from './index.js'
-
-const popupPicImage = document.querySelector('.popup__image');
-const popupPicName = document.querySelector('.popup__description');
-const buttonClosePicPopup = document.querySelector('.popup__close-icon_pic');
-const popupPic = document.querySelector('.popup_pic');
-
 export class Card {
-  constructor(title, link, templateSelector) {
+  constructor(title, link, templateSelector, handleCardClick) {
     this._title = title;
     this._link = link;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -26,52 +19,39 @@ export class Card {
   // ↓ удаление карточек
 
   _handleDelete() {
-    const currentCardItem = this._element.closest('.cards__item');
-    console.log(currentCardItem);
-    currentCardItem.remove();
+    this._currentCardItem = this._element.closest('.cards__item');
+    this._currentCardItem.remove();
   }
 
   // ↓ лайки
 
   _handleLike() {
-    const likeButtonClosest = this._element.querySelector('.cards__like-button');
-    likeButtonClosest.classList.toggle('cards__like-button_active');
-  }
-
-  // ↓ попап картинки
-
-  _handleFullPic() {
-    popupPicImage.src = this._element.querySelector('.cards__pic').src;
-    popupPicName.textContent = this._element.querySelector('.cards__name').textContent;
-    popupPicImage.alt = this._element.querySelector('.cards__name').textContent;
-    openPopup(popupPic);
-
+    this._likeButton.classList.toggle('cards__like-button_active');
   }
 
   // ↓ ф-ция слушателей лайка, корзины и фулла
 
   _setEventListeners() {
-    const deleteButton = this._element.querySelector('.cards__bin');
-    deleteButton.addEventListener('click', () => { this._handleDelete() });
+    this._deleteButton = this._element.querySelector('.cards__bin');
+    this._deleteButton.addEventListener('click', () => { this._handleDelete() });
 
-    const likeButton = this._element.querySelector('.cards__like-button');
-    likeButton.addEventListener('click', () => { this._handleLike() });
+    this._likeButton = this._element.querySelector('.cards__like-button');
+    this._likeButton.addEventListener('click', () => { this._handleLike() });
 
-    const img = this._element.querySelector('.cards__pic');
-    img.addEventListener('click', () => { this._handleFullPic() });
-
-    buttonClosePicPopup.addEventListener('click', () => { closePopup(popupPic) });
+    this._cardImg = this._element.querySelector('.cards__pic');
+    this._cardImg.addEventListener('click', () => { this._handleCardClick(this._title, this._link) });
   }
 
   // ↓ создание карточки 
 
   generateCard() {
     this._element = this._getTemplate();
+    this._cardTitle = this._element.querySelector('.cards__name');
     this._setEventListeners();
 
-    this._element.querySelector('.cards__pic').src = this._link;
-    this._element.querySelector('.cards__pic').alt = this._title;
-    this._element.querySelector('.cards__name').textContent = this._title;
+    this._cardImg.src = this._link;
+    this._cardImg.alt = this._title;
+    this._cardTitle.textContent = this._title;
 
     return this._element;
   }

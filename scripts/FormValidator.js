@@ -66,6 +66,16 @@ export class FormValidator {
     }
   };
 
+  resetValidation() {
+    this._popupAddForm = document.querySelector('.popup__form_add');
+    this._popupAddForm.reset();
+    this._toggleButtonState();
+
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement)
+    });
+
+  }
 
   // обработчики для всех полей формы
   _setValidationEventListeners = () => {
@@ -86,16 +96,7 @@ export class FormValidator {
 
   // обработчики всем формам
   enableValidation = () => {
-    // Найдём все формы с указанным классом в DOM,
-    // сделаем из них массив методом Array.from
-    this._formList = Array.from(document.querySelectorAll(this._formSelector));
-
-    // Переберём полученную коллекцию
-    this._formList.forEach(() => {
-      // Для каждой формы вызовем функцию setEventListeners,
-      // передав ей элемент формы
       this._setValidationEventListeners();
-    });
   };
 }
 
