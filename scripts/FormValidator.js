@@ -67,8 +67,6 @@ export class FormValidator {
   };
 
   resetValidation() {
-    this._popupAddForm = document.querySelector('.popup__form_add');
-    this._popupAddForm.reset();
     this._toggleButtonState();
 
     this._inputList.forEach((inputElement) => {

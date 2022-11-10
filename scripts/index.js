@@ -133,6 +133,7 @@ popupAddForm.addEventListener('submit', (evt) => {
 
   closePopup(popupAdd);
   popupAddValidation.resetValidation();
+  evt.target.reset();
 
 });
 
