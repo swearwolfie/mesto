@@ -33,7 +33,7 @@ export class FormValidator {
   };
 
   // кнопка
-  _toggleButtonState = () => {
+  toggleButtonState = () => {
     if (this._hasInvalidInput(this._inputList)) {
       // делаем кнопку неактивной
       this._buttonElement.classList.add(this._inactiveButtonClass);
@@ -67,7 +67,7 @@ export class FormValidator {
   };
 
   resetValidation() {
-    this._toggleButtonState();
+    this.toggleButtonState();
 
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement)
@@ -77,7 +77,7 @@ export class FormValidator {
 
   // обработчики для всех полей формы
   _setValidationEventListeners = () => {
-    this._toggleButtonState();
+    this.toggleButtonState();
 
     // Обойдём все элементы полученной коллекции
     this._inputList.forEach((inputElement) => {
@@ -87,7 +87,7 @@ export class FormValidator {
         // передав ей форму и проверяемый элемент
         this._checkInputValidity(inputElement);
         // передаем ф-ции массив полей формы и элемент кнопки
-        this._toggleButtonState();
+        this.toggleButtonState();
       });
     });
   };

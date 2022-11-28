@@ -15,8 +15,8 @@ const popupPic = document.querySelector('.popup_pic');
 const cards = document.querySelector('.cards');
 const popupAddForm = document.querySelector('.popup__form_add');
 
-import { Card } from './Card.js'
-import { FormValidator } from './FormValidator.js';
+import { Card } from '../components/Card.js'
+import { FormValidator } from '../components/FormValidator.js';
 
 const popupEditValidation = new FormValidator({
   formSelector: '.popup__form',

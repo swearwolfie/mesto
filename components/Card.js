@@ -39,7 +39,7 @@ export class Card {
     this._likeButton.addEventListener('click', () => { this._handleLike() });
 
     this._cardImg = this._element.querySelector('.cards__pic');
-    this._cardImg.addEventListener('click', () => { this._handleCardClick(this._title, this._link) });
+    this._cardImg.addEventListener('click', () => { this._handleCardClick(this._title, this._link)});
   }
 
   // ↓ создание карточки 
