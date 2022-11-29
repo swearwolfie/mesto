@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "build:dev": "rimraf dist && webpack --mode development",
-    "start": "webpack serve --open"
+    "build": "rimraf dist && webpack --mode development",
+    "dev": "webpack serve --open"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",

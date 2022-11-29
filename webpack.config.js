@@ -1,5 +1,5 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); 
 
 module.exports = {
@@ -11,6 +11,7 @@ module.exports = {
   devServer: {
     static: './dist',
   },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -25,16 +26,27 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader,           
-          {
-          loader: "css-loader",
-          options: {
-            modules: true,
-            importLoaders: 1,
-          },
+        use: [MiniCssExtractPlugin.loader, {
+          loader: 'css-loader'
         }, 
-        "postcss-loader"],
+        "postcss-loader"
+      ],
         },
+        {
+          test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
+          type: 'asset/resource',
+          generator: {
+            filename: 'images/[name][ext]'
+          }
+          },
+          {
+            test: /\.(woff(2)?|eot|ttf|otf)$/,
+            type: 'asset/resource',
+            generator: {
+              filename: 'fonts/[name][ext]'
+            }
+            }
+
     ]
   },
   plugins: [
