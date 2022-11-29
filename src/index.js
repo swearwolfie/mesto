@@ -1,3 +1,5 @@
+import './pages/index.css';
+
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const nameInput = document.querySelector('.popup__input_line_name');
 const jobInput = document.querySelector('.popup__input_line_description');
