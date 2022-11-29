@@ -1,27 +1,17 @@
 const buttonEditProfile = document.querySelector('.profile__edit-button');
-const profileName = document.querySelector('.profile__name');
-const profileJob = document.querySelector('.profile__description');
 const nameInput = document.querySelector('.popup__input_line_name');
 const jobInput = document.querySelector('.popup__input_line_description');
 const popupEdit = document.querySelector('.popup_edit');
 const popupAdd = document.querySelector('.popup_add');
 const buttonAddCard = document.querySelector('.profile__add-button');
-const cardNameInput = document.querySelector('.popup__input_add_name');
-const cardPicInput = document.querySelector('.popup__input_add_pic');
-const popups = document.querySelectorAll('.popup');
-const popupPicImage = document.querySelector('.popup__image');
-const popupPicName = document.querySelector('.popup__description');
-const popupPic = document.querySelector('.popup_pic');
-const cards = document.querySelector('.cards');
-const popupAddForm = document.querySelector('.popup__form_add');
 
-import { Card } from '../components/Card.js'
-import Section from '../components/Section.js';
-import { FormValidator } from '../components/FormValidator.js';
-import Popup from '../components/Popup.js';
-import PicturePopup from '../components/PicturePopup.js';
-import PopupWithForm from '../components/PopupWithForm.js';
-import UserInfo from '../components/UserInfo.js';
+
+import { Card } from './components/Card.js'
+import Section from './components/Section.js';
+import { FormValidator } from './components/FormValidator.js';
+import PicturePopup from './components/PicturePopup.js';
+import PopupWithForm from './components/PopupWithForm.js';
+import UserInfo from './components/UserInfo.js';
 
 const popupEditValidation = new FormValidator({
   formSelector: '.popup__form',
