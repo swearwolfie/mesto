@@ -9,12 +9,12 @@ export default class UserInfo {
 
 
   getUserInfo() {
-    const getInfo = {
+    const gottenInfo = {
     userName: this._profileName.textContent,
     userDescription: this._profileJob.textContent
   }
 
-    return getInfo;
+    return gottenInfo;
   }
 
   setUserInfo() {
