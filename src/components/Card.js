@@ -8,10 +8,9 @@ export class Card {
 
   _getTemplate() {
     const cardElement = document
-    .querySelector(this._templateSelector)
-    .content
-    .querySelector('.cards__item')
-    .cloneNode(true);
+      .querySelector(this._templateSelector)
+      .content.querySelector(".cards__item")
+      .cloneNode(true);
 
     return cardElement;
   }
@@ -19,34 +18,40 @@ export class Card {
   // ↓ удаление карточек
 
   _handleDelete() {
-    this._currentCardItem = this._element.closest('.cards__item');
-    this._currentCardItem.remove();
+    this._element.remove();
+    this._element = null;
   }
 
   // ↓ лайки
 
   _handleLike() {
-    this._likeButton.classList.toggle('cards__like-button_active');
+    this._likeButton.classList.toggle("cards__like-button_active");
   }
 
   // ↓ ф-ция слушателей лайка, корзины и фулла
 
   _setEventListeners() {
-    this._deleteButton = this._element.querySelector('.cards__bin');
-    this._deleteButton.addEventListener('click', () => { this._handleDelete() });
+    this._deleteButton = this._element.querySelector(".cards__bin");
+    this._deleteButton.addEventListener("click", () => {
+      this._handleDelete();
+    });
 
-    this._likeButton = this._element.querySelector('.cards__like-button');
-    this._likeButton.addEventListener('click', () => { this._handleLike() });
+    this._likeButton = this._element.querySelector(".cards__like-button");
+    this._likeButton.addEventListener("click", () => {
+      this._handleLike();
+    });
 
-    this._cardImg = this._element.querySelector('.cards__pic');
-    this._cardImg.addEventListener('click', () => { this._handleCardClick(this._title, this._link)});
+    this._cardImg = this._element.querySelector(".cards__pic");
+    this._cardImg.addEventListener("click", () => {
+      this._handleCardClick(this._title, this._link);
+    });
   }
 
-  // ↓ создание карточки 
+  // ↓ создание карточки
 
   generateCard() {
     this._element = this._getTemplate();
-    this._cardTitle = this._element.querySelector('.cards__name');
+    this._cardTitle = this._element.querySelector(".cards__name");
     this._setEventListeners();
 
     this._cardImg.src = this._link;
@@ -55,5 +60,4 @@ export class Card {
 
     return this._element;
   }
-
 }
