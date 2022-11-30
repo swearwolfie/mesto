@@ -1,9 +1,7 @@
 export default class Popup {
-  constructor(popupElement) {
-    this._popup = document.querySelector(popupElement);
-    this._popupOpened = document.querySelector(".popup_opened");
+  constructor(popupSelector) {
+    this._popup = document.querySelector(popupSelector);
     this._handleEscCloseRef = this._handleEscClose.bind(this);
-    this._closeButton = document.querySelector(".popup__close-icon");
   }
 
   // ↓ ф-ции /методы/ открытия и закрытия

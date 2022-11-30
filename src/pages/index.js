@@ -31,9 +31,10 @@ const userInfo = new UserInfo({
 // ↓ новая форма edit
 
 const editForm = new PopupWithForm({
-  popupElement: ".popup_edit",
+  popupSelector: ".popup_edit",
   handleSubmit: (formData) => {
     userInfo.setUserInfo(formData);
+    editForm.closePopup();
   },
 });
 
@@ -63,7 +64,6 @@ function handleCardClick(title, link) {
 
 const cardsList = new Section(
   {
-    data: initialCards,
     renderer: (item) => {
       const cardThing = new Card(
         item.name,
@@ -78,14 +78,13 @@ const cardsList = new Section(
   ".cards"
 );
 
-cardsList.renderItems();
+cardsList.renderItems(initialCards);
 
 // ↓  новая форма add
 
 const addForm = new PopupWithForm({
-  popupElement: ".popup_add",
+  popupSelector: ".popup_add",
   handleSubmit: (data) => {
-    console.log(data);
     const addedCard = new Card(
       data.title,
       data.picture,
@@ -93,6 +92,7 @@ const addForm = new PopupWithForm({
       handleCardClick
     );
     cardsList.addItem(addedCard.generateCard());
+    addForm.closePopup();
   },
 });
 

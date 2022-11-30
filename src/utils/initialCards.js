@@ -17,7 +17,7 @@ export const initialCards = [
   },
   {
     name: 'Водопад Малтнома',
-    link: 'https://i.ibb.co/vXgwhr1/Multnomah-Falls.jpg'
+    link: 'https://i.ibb.co/Jv9jMpW/Multnomah-Falls.jpg'
   },
   {
     name: 'Остров Оаху',
