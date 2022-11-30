@@ -1,4 +1,4 @@
-import './pages/index.css';
+import './index.css';
 
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const nameInput = document.querySelector('.popup__input_line_name');
@@ -8,28 +8,17 @@ const popupAdd = document.querySelector('.popup_add');
 const buttonAddCard = document.querySelector('.profile__add-button');
 
 
-import { Card } from './components/Card.js'
-import Section from './components/Section.js';
-import { FormValidator } from './components/FormValidator.js';
-import PicturePopup from './components/PicturePopup.js';
-import PopupWithForm from './components/PopupWithForm.js';
-import UserInfo from './components/UserInfo.js';
+import { Card } from '../components/Card.js'
+import Section from '../components/Section.js';
+import { FormValidator } from '../components/FormValidator.js';
+import PicturePopup from '../components/PicturePopup.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+import { config } from '../utils/constants';
+import { initialCards } from '../utils/initialCards';
 
-const popupEditValidation = new FormValidator({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'}, popupEdit);
-
-const popupAddValidation = new FormValidator({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'}, popupAdd);
+const popupEditValidation = new FormValidator(config, popupEdit);
+const popupAddValidation = new FormValidator(config, popupAdd);
 
 
 popupEditValidation.enableValidation();
@@ -55,51 +44,23 @@ editForm.setEventListeners();
 // ↓ активация кнопки edit
 
 buttonEditProfile.addEventListener('click', () => {  
-  nameInput.value = userInfo.getUserInfo().userName;
-  jobInput.value = userInfo.getUserInfo().userDescription;
+  const gottenInfo = userInfo.getUserInfo();
+  nameInput.value = gottenInfo.userName;
+  jobInput.value = gottenInfo.userDescription;
   editForm.openPopup();
 });
-
-// ↓ добавляем свои карточки
-
-const initialCards = [
-  {
-    name: 'Национальный Парк Бэдлэндс',
-    link: 'https://i.ibb.co/x6YS8s3/Badlands-National-Park-South-Dakota-USA.jpg'
-  },
-  {
-    name: 'Горы Блу Ридж',
-    link: 'https://i.ibb.co/pj5KYMy/Blue-Ridge-Mountains.jpg'
-  },
-  {
-    name: 'Йеллоустоун',
-    link: 'https://i.ibb.co/MZB5HMW/Yellowstone.jpg'
-  },
-  {
-    name: 'Тропа Дяди Тома',
-    link: 'https://i.ibb.co/0jBFndg/Uncle-Toms-Trail.jpg'
-  },
-  {
-    name: 'Водопад Малтнома',
-    link: 'https://i.ibb.co/vXgwhr1/Multnomah-Falls.jpg'
-  },
-  {
-    name: 'Остров Оаху',
-    link: 'https://i.ibb.co/TkPqyZH/Oahu.jpg'
-  }
-];
 
 
 // ↓ новая фигулина про картинки
 
 const picturePopup = new PicturePopup('.popup_pic');
+picturePopup.setEventListeners();
 
 
 // ↓ и так понятно 
 
 function handleCardClick(title, link) {
   picturePopup.openPopup(title, link);
-  picturePopup.setEventListeners();
 }
 
 
