@@ -24,16 +24,16 @@ popupEditValidation.enableValidation();
 // ↓ новая фигулина про юзера
 
 const userInfo = new UserInfo({
-  userName: ".popup__input_line_name",
-  userDescription: ".popup__input_line_description",
+  userName: ".profile__name",
+  userDescription: ".profile__description",
 });
 
 // ↓ новая форма edit
 
 const editForm = new PopupWithForm({
   popupSelector: ".popup_edit",
-  handleSubmit: (formData) => {
-    userInfo.setUserInfo(formData);
+  handleSubmit: (data) => {
+    userInfo.setUserInfo(data);
     editForm.closePopup();
   },
 });
@@ -60,19 +60,25 @@ function handleCardClick(title, link) {
   picturePopup.openPopup(title, link);
 }
 
+// ↓  новый экземпляр карточки
+
+function addCard(data) { 
+  const cardItem = new Card(
+  data.title,
+  data.picture,
+  ".cards__item-template",
+  handleCardClick
+);
+
+return cardItem.generateCard();
+}
+
 // ↓  блок с картинками
 
 const cardsList = new Section(
   {
-    renderer: (item) => {
-      const cardThing = new Card(
-        item.name,
-        item.link,
-        ".cards__item-template",
-        handleCardClick
-      );
-      const cardElement = cardThing.generateCard();
-      cardsList.addItem(cardElement);
+    renderer: (data) => {
+      cardsList.addItem(addCard(data));
     },
   },
   ".cards"
@@ -85,13 +91,7 @@ cardsList.renderItems(initialCards);
 const addForm = new PopupWithForm({
   popupSelector: ".popup_add",
   handleSubmit: (data) => {
-    const addedCard = new Card(
-      data.title,
-      data.picture,
-      ".cards__item-template",
-      handleCardClick
-    );
-    cardsList.addItem(addedCard.generateCard());
+    cardsList.addItem(addCard(data));
     addForm.closePopup();
   },
 });
