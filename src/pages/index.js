@@ -106,3 +106,7 @@ buttonAddCard.addEventListener("click", () => {
 });
 
 popupAddValidation.enableValidation();
+
+
+// ТУТ
+
