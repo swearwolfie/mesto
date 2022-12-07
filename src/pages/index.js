@@ -15,6 +15,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import { config } from "../utils/constants";
 import { initialCards } from "../utils/initialCards";
+import Api from "../components/Api";
 
 const popupEditValidation = new FormValidator(config, popupEdit);
 const popupAddValidation = new FormValidator(config, popupAdd);
@@ -84,7 +85,30 @@ const cardsList = new Section(
   ".cards"
 );
 
-cardsList.renderItems(initialCards);
+/* cardsList.renderItems(initialCards); */ // !!!!
+
+// ↓  приключения с отрисовкой карточек через API 
+// ↓  конфиг
+
+
+const apiConfig = {
+  url: "https://mesto.nomoreparties.co/v1/cohort-54/cards",
+  headers: {
+    authorization: 'e005a204-1370-46e1-93c7-d7d1a162ac21',
+    "Content-type": 'application/json'
+  } 
+}
+
+// ↓  отрисовка
+
+const apiNew = new Api(apiConfig);
+apiNew.getCards() // result - готовые данные
+  .then((result) => {
+    cardsList.renderItems(result);
+}).catch((error) => {
+  console.log('я ошибка лиловая спелая садовая') // ????!!!
+}) 
+
 
 // ↓  новая форма add
 
@@ -107,6 +131,4 @@ buttonAddCard.addEventListener("click", () => {
 
 popupAddValidation.enableValidation();
 
-
-// ТУТ
 
