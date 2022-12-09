@@ -17,12 +17,32 @@ import { config } from "../utils/constants";
 import { initialCards } from "../utils/initialCards";
 import Api from "../components/Api";
 
+
+// ↓  конфиг API
+
+const apiConfig = {
+  url: 'https://mesto.nomoreparties.co/v1/cohort-54/',
+  headers: {
+    authorization: 'e005a204-1370-46e1-93c7-d7d1a162ac21',
+    "Content-type": 'application/json'
+  } 
+}
+
+const apiNew = new Api(apiConfig);
+
 const popupEditValidation = new FormValidator(config, popupEdit);
 const popupAddValidation = new FormValidator(config, popupAdd);
 
 popupEditValidation.enableValidation();
 
 // ↓ новая фигулина про юзера
+
+apiNew.getProfileInfo()
+.then((profileUserInfo) => {
+  userInfo.setUserInfo(profileUserInfo.name, profileUserInfo.about)
+}).catch((error) => {
+  console.log(error)
+})
 
 const userInfo = new UserInfo({
   userName: ".profile__name",
@@ -34,7 +54,12 @@ const userInfo = new UserInfo({
 const editForm = new PopupWithForm({
   popupSelector: ".popup_edit",
   handleSubmit: (data) => {
-    userInfo.setUserInfo(data);
+    apiNew.editProfile(data.profile, data.description) // data – содержимое инпутов, profile/description – name'ы инпутов из индекс.хтмл
+    .then((submittedInfo) => {
+      userInfo.setUserInfo(submittedInfo.name, submittedInfo.about);
+    }).catch((error) => {
+      console.log(error);
+    })
     editForm.closePopup();
   },
 });
@@ -65,8 +90,8 @@ function handleCardClick(title, link) {
 
 function addCard(data) { 
   const cardItem = new Card(
-  data.title,
-  data.picture,
+  data.name,
+  data.link,
   ".cards__item-template",
   handleCardClick
 );
@@ -88,34 +113,30 @@ const cardsList = new Section(
 /* cardsList.renderItems(initialCards); */ // !!!!
 
 // ↓  приключения с отрисовкой карточек через API 
-// ↓  конфиг
-
-
-const apiConfig = {
-  url: "https://mesto.nomoreparties.co/v1/cohort-54/cards",
-  headers: {
-    authorization: 'e005a204-1370-46e1-93c7-d7d1a162ac21',
-    "Content-type": 'application/json'
-  } 
-}
-
 // ↓  отрисовка
 
-const apiNew = new Api(apiConfig);
 apiNew.getCards() // result - готовые данные
-  .then((result) => {
-    cardsList.renderItems(result);
+  .then((cards) => {
+    cardsList.renderItems(cards);
 }).catch((error) => {
-  console.log('я ошибка лиловая спелая садовая') // ????!!!
-}) 
+  console.log(error);
+});
 
 
 // ↓  новая форма add
 
+
 const addForm = new PopupWithForm({
   popupSelector: ".popup_add",
   handleSubmit: (data) => {
-    cardsList.addItem(addCard(data));
+    /// cardsList.addItem(addCard(data));
+    apiNew.addNewCard(data.title, data.picture)
+    .then((newCard) => {
+      cardsList.addItem(addCard(newCard))
+    })
+    .catch((error) => {
+      console.log(error);
+    })
     addForm.closePopup();
   },
 });
