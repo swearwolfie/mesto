@@ -5,6 +5,7 @@ const nameInput = document.querySelector(".popup__input_line_name");
 const jobInput = document.querySelector(".popup__input_line_description");
 const popupEdit = document.querySelector(".popup_edit");
 const popupAdd = document.querySelector(".popup_add");
+const popupConfirmDelete = document.querySelector('.popup_make-sure');
 const buttonAddCard = document.querySelector(".profile__add-button");
 
 import { Card } from "../components/Card.js";
@@ -86,14 +87,38 @@ function handleCardClick(title, link) {
   picturePopup.openPopup(title, link);
 }
 
+
+// ↓ новая форма для подтверждения удаления карточки 
+
+const confirmDeleteForm = new PopupWithForm({
+  popupSelector: '.popup_make-sure'
+})
+
+confirmDeleteForm.setEventListeners();
+
+// ↓  функция подтверждения удаления
+
+function handleBinClick(id) {
+  confirmDeleteForm.openPopup();
+  confirmDeleteForm.changeSubmitHandler(() => {
+    console.log(id)
+    // тут функция удаления через апи как-то как-нибудь плак плак
+    apiNew.deleteCard(id)
+    .then(() => {}) // !!!!!!!!!!
+    });
+}
+
 // ↓  новый экземпляр карточки
 
 function addCard(data) { 
   const cardItem = new Card(
   data.name,
   data.link,
+  data.likes,
+  data._id,
   ".cards__item-template",
-  handleCardClick
+  handleCardClick,
+  handleBinClick
 );
 
 return cardItem.generateCard();
@@ -110,8 +135,6 @@ const cardsList = new Section(
   ".cards"
 );
 
-/* cardsList.renderItems(initialCards); */ // !!!!
-
 // ↓  приключения с отрисовкой карточек через API 
 // ↓  отрисовка
 
@@ -124,7 +147,6 @@ apiNew.getCards() // result - готовые данные
 
 
 // ↓  новая форма add
-
 
 const addForm = new PopupWithForm({
   popupSelector: ".popup_add",
@@ -151,5 +173,3 @@ buttonAddCard.addEventListener("click", () => {
 });
 
 popupAddValidation.enableValidation();
-
-

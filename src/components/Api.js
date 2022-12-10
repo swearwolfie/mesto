@@ -4,27 +4,26 @@ export default class Api {
     this._headers = headers;
   }
 
-  /* checkResponse() { // ?????????? ВЫНЕСТИ В ОТДЕЛЬНУЮ ФУНКЦИЮ НО ШОБ РАБОТАЛО
+  checkResponse(response) { // отдельная функция для общения с сервером
     if (response.ok) {
       return response.json(); // Promise.resolve
     } else {
       Promise.reject(`Ошибка: ${response.status} ${response.statusText}`);
     }
-  } */
+  } 
 
   getCards() {
     return fetch(`${this._url}${'cards'}`, {
       headers: this._headers
-    }).then((response) => {
-      if (response.ok) {
-        return response.json(); // Promise.resolve
-      } else {
-        Promise.reject(`Ошибка: ${response.status} ${response.statusText}`);
-      }
-    })
+    }).then(this.checkResponse)
   }
 
-  deleteCard() {}
+  deleteCard(id) {
+    return fetch(`${this._url}${'cards/card'}${id}`, {
+      method: "DELETE",
+      headers: this._headers
+    }).then(this.checkResponse)
+  }
   
   addNewCard(name, link) {
     return fetch(`${this._url}${'cards'}`, {
@@ -32,27 +31,15 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify({ 
         name, 
-        link 
+        link
       }),
-    }).then((response) => {
-      if (response.ok) {
-        return response.json(); // Promise.resolve
-      } else {
-        Promise.reject(`Ошибка: ${response.status} ${response.statusText}`);
-      }
-    })
+    }).then(this.checkResponse)
   }
 
   getProfileInfo() {
     return fetch(`${this._url}${'users/me'}`, {
       headers: this._headers
-    }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        Promise.reject(`Ошибка: ${response.status} ${response.statusText}`);
-      }
-    })
+    }).then(this.checkResponse)
   }
 
   editProfile(name, about) {
@@ -63,12 +50,6 @@ export default class Api {
         name,
         about
       })
-    }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        Promise.reject(`Ошибка: ${response.status} ${response.statusText}`);
-      }
-  })
-}
+    }).then(this.checkResponse)
+  }
 }

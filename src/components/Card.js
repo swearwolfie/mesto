@@ -1,9 +1,12 @@
 export class Card {
-  constructor(title, link, templateSelector, handleCardClick) {
+  constructor(title, link, likes, id, templateSelector, handleCardClick, handleBinClick) {
     this._title = title;
     this._link = link;
+    this._likes = likes;
+    this._id = id;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._handleBinClick = handleBinClick;
   }
 
   _getTemplate() {
@@ -15,25 +18,34 @@ export class Card {
     return cardElement;
   }
 
+  
   // ↓ удаление карточек
 
-  _handleDelete() {
+  handleDelete() {
     this._element.remove();
     this._element = null;
   }
 
-  // ↓ лайки
+  // ↓ кнопка лайка
 
   _handleLike() {
     this._likeButton.classList.toggle("cards__like-button_active");
   }
+
+  // ↓ счетчик лайков
+
+  _countLikes() {
+    this._likesNumber = this._element.querySelector('.cards__likes-number');
+    this._likesNumber.textContent = this._likes.length;
+  }
+
 
   // ↓ ф-ция слушателей лайка, корзины и фулла
 
   _setEventListeners() {
     this._deleteButton = this._element.querySelector(".cards__bin");
     this._deleteButton.addEventListener("click", () => {
-      this._handleDelete();
+      this._handleBinClick(this._id);
     });
 
     this._likeButton = this._element.querySelector(".cards__like-button");
@@ -45,6 +57,8 @@ export class Card {
     this._cardImg.addEventListener("click", () => {
       this._handleCardClick(this._title, this._link);
     });
+
+    this._countLikes();
   }
 
   // ↓ создание карточки
