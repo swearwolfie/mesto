@@ -1,5 +1,7 @@
 import "./index.css";
 
+// _id: '80f1ef482b84886f3d501767'
+
 const buttonEditProfile = document.querySelector(".profile__edit-button");
 const nameInput = document.querySelector(".popup__input_line_name");
 const jobInput = document.querySelector(".popup__input_line_description");
@@ -38,9 +40,12 @@ popupEditValidation.enableValidation();
 
 // ↓ новая фигулина про юзера
 
+let userId // получаем ниже ↓↓↓
+
 apiNew.getProfileInfo()
 .then((profileUserInfo) => {
   userInfo.setUserInfo(profileUserInfo.name, profileUserInfo.about)
+  userId = profileUserInfo._id; // я родился
 }).catch((error) => {
   console.log(error)
 })
@@ -98,27 +103,68 @@ confirmDeleteForm.setEventListeners();
 
 // ↓  функция подтверждения удаления
 
-function handleBinClick(id) {
+/* function handleBinClick(id) {
   confirmDeleteForm.openPopup();
   confirmDeleteForm.changeSubmitHandler(() => {
-    console.log(id)
-    // тут функция удаления через апи как-то как-нибудь плак плак
     apiNew.deleteCard(id)
-    .then(() => {}) // !!!!!!!!!!
+    .then((res) => {
+      addCard.handleDelete() // ТУТ НЕ ВЫЗЫВАЕТСЯ =(
+      confirmDeleteForm.closePopup()
+    }) 
     });
-}
+} */
+
+// ↓  функция лайка
+/*
+function handleLikeClick(id) {
+  apiNew.putLike(id)
+  .then(() => {})
+  .catch((error) => {
+    console.log(error);
+  })
+}*/
 
 // ↓  новый экземпляр карточки
 
 function addCard(data) { 
-  const cardItem = new Card(
-  data.name,
-  data.link,
-  data.likes,
-  data._id,
+  const cardItem = new Card({
+    title: data.name,
+    link: data.link,
+    likes: data.likes,
+    id: data._id,
+    userId: userId,
+    ownerId: data.owner._id,
+  },
   ".cards__item-template",
   handleCardClick,
-  handleBinClick
+  (id) => {
+    confirmDeleteForm.openPopup();
+    confirmDeleteForm.changeSubmitHandler(() => {
+      apiNew.deleteCard(id)
+      .then((res) => {
+        cardItem.handleDelete()
+        confirmDeleteForm.closePopup()
+      }) 
+      });
+  },
+  (id) => {
+    if (cardItem.isLiked()) {
+      apiNew.deleteLike(id)
+      .then((res) => {
+        cardItem.countLikes(res.likes);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    } else {
+    apiNew.putLike(id)
+    .then((res) => {
+      cardItem.countLikes(res.likes);
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }}
 );
 
 return cardItem.generateCard();
@@ -151,7 +197,7 @@ apiNew.getCards() // result - готовые данные
 const addForm = new PopupWithForm({
   popupSelector: ".popup_add",
   handleSubmit: (data) => {
-    /// cardsList.addItem(addCard(data));
+    console.log(data)
     apiNew.addNewCard(data.title, data.picture)
     .then((newCard) => {
       cardsList.addItem(addCard(newCard))

@@ -19,7 +19,7 @@ export default class Api {
   }
 
   deleteCard(id) {
-    return fetch(`${this._url}${'cards/card'}${id}`, {
+    return fetch(`${this._url}${'cards/'}${id}`, {
       method: "DELETE",
       headers: this._headers
     }).then(this.checkResponse)
@@ -50,6 +50,20 @@ export default class Api {
         name,
         about
       })
+    }).then(this.checkResponse)
+  }
+
+  deleteLike(id) {
+    return fetch(`${this._url}${'cards/'}${id}${'/likes'}`, {
+      method: "DELETE",
+      headers: this._headers
+    }).then(this.checkResponse)
+  }
+
+  putLike(id) {
+    return fetch(`${this._url}${'cards/'}${id}${'/likes'}`, {
+      method: "PUT",
+      headers: this._headers
     }).then(this.checkResponse)
   }
 }
