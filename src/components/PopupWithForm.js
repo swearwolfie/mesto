@@ -7,6 +7,7 @@ export default class PopupWithForm extends Popup {
     this._form = this._popup.querySelector(".popup__form");
     // достаём все элементы полей
     this._inputList = this._popup.querySelectorAll(".popup__input");
+    this._popupButton = this._popup.querySelector('.popup__submit');
   }
 
   _getInputValues() {
@@ -39,5 +40,14 @@ export default class PopupWithForm extends Popup {
 
   changeSubmitHandler(newSubmitHandler) {
     this._handleSubmit = newSubmitHandler;
+  }
+
+
+  renderLoading(isLoading) {
+    if(isLoading) {
+      this._popupButton.textContent = 'Сохранение...'
+    } else {
+      this._popupButton.textContent = this._popupButtonTextContent
+    }
   }
 }

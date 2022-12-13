@@ -7,8 +7,10 @@ const nameInput = document.querySelector(".popup__input_line_name");
 const jobInput = document.querySelector(".popup__input_line_description");
 const popupEdit = document.querySelector(".popup_edit");
 const popupAdd = document.querySelector(".popup_add");
+const popupAvatar = document.querySelector(".popup_avatar");
 const popupConfirmDelete = document.querySelector('.popup_make-sure');
 const buttonAddCard = document.querySelector(".profile__add-button");
+const buttonChangeAvatar = document.querySelector(".profile__photo-edit-button");
 
 import { Card } from "../components/Card.js";
 import Section from "../components/Section.js";
@@ -17,7 +19,6 @@ import PicturePopup from "../components/PicturePopup.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import { config } from "../utils/constants";
-import { initialCards } from "../utils/initialCards";
 import Api from "../components/Api";
 
 
@@ -35,8 +36,10 @@ const apiNew = new Api(apiConfig);
 
 const popupEditValidation = new FormValidator(config, popupEdit);
 const popupAddValidation = new FormValidator(config, popupAdd);
+const popupChangeAvatarValidation = new FormValidator(config, popupAvatar);
 
 popupEditValidation.enableValidation();
+popupChangeAvatarValidation.enableValidation();
 
 // ↓ новая фигулина про юзера
 
@@ -53,6 +56,7 @@ apiNew.getProfileInfo()
 const userInfo = new UserInfo({
   userName: ".profile__name",
   userDescription: ".profile__description",
+  userAvatar: ".profile__photo"
 });
 
 // ↓ новая форма edit
@@ -60,11 +64,14 @@ const userInfo = new UserInfo({
 const editForm = new PopupWithForm({
   popupSelector: ".popup_edit",
   handleSubmit: (data) => {
+    editForm.renderLoading(true);
     apiNew.editProfile(data.profile, data.description) // data – содержимое инпутов, profile/description – name'ы инпутов из индекс.хтмл
     .then((submittedInfo) => {
       userInfo.setUserInfo(submittedInfo.name, submittedInfo.about);
     }).catch((error) => {
       console.log(error);
+    }).finally(() => {
+      editForm.renderLoading(false);
     })
     editForm.closePopup();
   },
@@ -81,6 +88,34 @@ buttonEditProfile.addEventListener("click", () => {
   editForm.openPopup();
 });
 
+// ↓ новая форма редактирования аватара
+
+const avatarPopup = new PopupWithForm({
+  popupSelector: '.popup_avatar',
+  handleSubmit: (data) => {
+    avatarPopup.renderLoading(true)
+    console.log(data, 'ME MARIO')
+    apiNew.changeAvatar(data.avatar)
+    .then((res) => {
+      console.log(res, 'ME LUIGI')
+      userInfo.setUserAvatar(res.avatar);
+    })
+    .catch((error) => { console.log(error) })
+    .finally(() => {
+      avatarPopup.renderLoading(false);
+    })
+    avatarPopup.closePopup();
+  }
+  });
+
+avatarPopup.setEventListeners();
+
+// ↓ активация кнопки editAvatar
+
+buttonChangeAvatar.addEventListener("click", () => {
+  avatarPopup.openPopup();
+})
+
 // ↓ новая фигулина про картинки
 
 const picturePopup = new PicturePopup(".popup_pic");
@@ -91,7 +126,6 @@ picturePopup.setEventListeners();
 function handleCardClick(title, link) {
   picturePopup.openPopup(title, link);
 }
-
 
 // ↓ новая форма для подтверждения удаления карточки 
 
@@ -197,13 +231,16 @@ apiNew.getCards() // result - готовые данные
 const addForm = new PopupWithForm({
   popupSelector: ".popup_add",
   handleSubmit: (data) => {
-    console.log(data)
+    addForm.renderLoading(true);
     apiNew.addNewCard(data.title, data.picture)
     .then((newCard) => {
       cardsList.addItem(addCard(newCard))
     })
     .catch((error) => {
       console.log(error);
+    })
+    .finally(() => {
+      addForm.renderLoading(false);
     })
     addForm.closePopup();
   },

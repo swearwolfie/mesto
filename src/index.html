@@ -17,6 +17,7 @@
       <section class="profile">
         <img src="<%=require('./images/Avatar.png')%>" class="profile__photo"
         alt="аватар пользователя">
+        <button type="button" class="profile__photo-edit-button"></button>
         <div class="profile__container">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button class="profile__edit-button" type="button"
@@ -80,7 +81,7 @@
           aria-label="закрыть"></button>
         <form class="popup__form popup__form_add" name="submit-form" novalidate>
           <h2 class="popup__edit">Обновить аватар</h2>
-          <input class="popup__input popup__input_add_pic" id="url-input"
+          <input class="popup__input" id="url-input"
             name="avatar" placeholder="Ссылка на картинку" type="url" required>
           <span class="popup__input-error url-input-error"></span>
           <button class="popup__submit popup__submit_add" type="submit"
