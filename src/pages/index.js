@@ -8,7 +8,6 @@ const jobInput = document.querySelector(".popup__input_line_description");
 const popupEdit = document.querySelector(".popup_edit");
 const popupAdd = document.querySelector(".popup_add");
 const popupAvatar = document.querySelector(".popup_avatar");
-const popupConfirmDelete = document.querySelector('.popup_make-sure');
 const buttonAddCard = document.querySelector(".profile__add-button");
 const buttonChangeAvatar = document.querySelector(".profile__photo-edit-button");
 
@@ -47,7 +46,8 @@ let userId // получаем ниже ↓↓↓
 
 apiNew.getProfileInfo()
 .then((profileUserInfo) => {
-  userInfo.setUserInfo(profileUserInfo.name, profileUserInfo.about)
+  userInfo.setUserInfo(profileUserInfo.name, profileUserInfo.about);
+  userInfo.setUserAvatar(profileUserInfo.avatar);
   userId = profileUserInfo._id; // я родился
 }).catch((error) => {
   console.log(error)
@@ -94,10 +94,8 @@ const avatarPopup = new PopupWithForm({
   popupSelector: '.popup_avatar',
   handleSubmit: (data) => {
     avatarPopup.renderLoading(true)
-    console.log(data, 'ME MARIO')
     apiNew.changeAvatar(data.avatar)
     .then((res) => {
-      console.log(res, 'ME LUIGI')
       userInfo.setUserAvatar(res.avatar);
     })
     .catch((error) => { console.log(error) })
