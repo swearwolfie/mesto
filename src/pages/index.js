@@ -44,6 +44,7 @@ popupEditValidation.enableValidation();
 
 let userId // получаем ниже ↓↓↓
 
+/*
 apiNew.getProfileInfo()
 .then((profileUserInfo) => {
   userInfo.setUserInfo(profileUserInfo.name, profileUserInfo.about);
@@ -51,6 +52,128 @@ apiNew.getProfileInfo()
   userId = profileUserInfo._id; // я родился
 }).catch((error) => {
   console.log(error)
+}) */
+
+// КАРТОЧКИ
+
+// ↓ новая фигулина про картинки
+
+const picturePopup = new PopupWithImage(".popup_pic");
+picturePopup.setEventListeners();
+
+// ↓ функция попапа картинки
+
+function handleCardClick(title, link) {
+  picturePopup.openPopup(title, link);
+}
+
+// ↓ новая форма для подтверждения удаления карточки 
+
+const confirmDeleteForm = new PopupWithConfirmation({
+  popupSelector: '.popup_make-sure'
+})
+
+confirmDeleteForm.setEventListeners();
+
+// ↓  новый экземпляр карточки
+
+function addCard(data) { 
+  const cardItem = new Card({
+    title: data.name,
+    link: data.link,
+    likes: data.likes,
+    id: data._id,
+    userId: userId,
+    ownerId: data.owner._id,
+  },
+  ".cards__item-template",
+  handleCardClick,
+  (id) => {
+    confirmDeleteForm.openPopup();
+    confirmDeleteForm.setDeleteConfirmation(() => {
+      confirmDeleteForm.renderLoading(true);
+      apiNew.deleteCard(id)
+      .then((res) => {
+        cardItem.handleDelete()
+        confirmDeleteForm.closePopup()
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        confirmDeleteForm.renderLoading(false);
+      }) 
+      });
+  },
+  (id) => {
+    if (cardItem.isLiked()) {
+      apiNew.deleteLike(id)
+      .then((res) => {
+        cardItem.countLikes(res.likes);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    } else {
+    apiNew.putLike(id)
+    .then((res) => {
+      cardItem.countLikes(res.likes);
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }}
+);
+
+return cardItem.generateCard();
+}
+
+
+// ↓  блок с картинками
+
+const cardsList = new Section(
+  {
+    renderer: (data) => {
+      cardsList.addItem(addCard(data));
+    },
+  },
+  ".cards"
+);
+
+// ↓  приключения с отрисовкой карточек через API 
+// ↓  отрисовка
+/*
+apiNew.getCards() // result - готовые данные
+  .then((cards) => {
+    cardsList.renderItems(cards);
+}).catch((error) => {
+  console.log(error);
+});*/
+
+// ↓  объединенные API: отрисовка карточек и профиля
+
+Promise.all([ //в Promise.all передаем массив промисов которые нужно выполнить
+
+  apiNew.getProfileInfo(),
+  apiNew.getCards()
+
+])
+
+.then((values)=>{ //попадаем сюда когда оба промиса будут выполнены
+
+  const userInfoValues = values[0];
+  const cards = values[1];
+  userInfo.setUserInfo(userInfoValues.name, userInfoValues.about);
+  userInfo.setUserAvatar(userInfoValues.avatar);
+  userId = userInfoValues._id; // я родился
+
+  cardsList.renderItems(cards);
+
+})
+
+.catch((err)=>{ 
+      console.log(err);
+
 })
 
 const userInfo = new UserInfo({
@@ -58,6 +181,8 @@ const userInfo = new UserInfo({
   userDescription: ".profile__description",
   userAvatar: ".profile__photo"
 });
+
+
 // ↓ новая форма edit
 
 const editForm = new PopupWithForm({
@@ -113,122 +238,6 @@ popupChangeAvatarValidation.enableValidation();
 buttonChangeAvatar.addEventListener("click", () => {
   avatarPopup.openPopup();
 })
-
-// ↓ новая фигулина про картинки
-
-const picturePopup = new PopupWithImage(".popup_pic");
-picturePopup.setEventListeners();
-
-// ↓ и так понятно
-
-function handleCardClick(title, link) {
-  picturePopup.openPopup(title, link);
-}
-
-// ↓ новая форма для подтверждения удаления карточки 
-
-const confirmDeleteForm = new PopupWithConfirmation({
-  popupSelector: '.popup_make-sure'
-})
-
-confirmDeleteForm.setEventListeners();
-
-// ↓  функция подтверждения удаления
-
-/* function handleBinClick(id) {
-  confirmDeleteForm.openPopup();
-  confirmDeleteForm.changeSubmitHandler(() => {
-    apiNew.deleteCard(id)
-    .then((res) => {
-      addCard.handleDelete() // ТУТ НЕ ВЫЗЫВАЕТСЯ =(
-      confirmDeleteForm.closePopup()
-    }) 
-    });
-} */
-
-// ↓  функция лайка
-/*
-function handleLikeClick(id) {
-  apiNew.putLike(id)
-  .then(() => {})
-  .catch((error) => {
-    console.log(error);
-  })
-}*/
-
-// ↓  новый экземпляр карточки
-
-function addCard(data) { 
-  const cardItem = new Card({
-    title: data.name,
-    link: data.link,
-    likes: data.likes,
-    id: data._id,
-    userId: userId,
-    ownerId: data.owner._id,
-  },
-  ".cards__item-template",
-  handleCardClick,
-  (id) => {
-    confirmDeleteForm.openPopup();
-    confirmDeleteForm.setDeleteConfirmation(() => {
-      confirmDeleteForm.renderLoading(true);
-      apiNew.deleteCard(id)
-      .then((res) => {
-        cardItem.handleDelete()
-        confirmDeleteForm.closePopup()
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        confirmDeleteForm.renderLoading(false);
-      }) 
-      });
-  },
-  (id) => {
-    if (cardItem.isLiked()) {
-      apiNew.deleteLike(id)
-      .then((res) => {
-        cardItem.countLikes(res.likes);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-    } else {
-    apiNew.putLike(id)
-    .then((res) => {
-      cardItem.countLikes(res.likes);
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-  }}
-);
-
-return cardItem.generateCard();
-}
-
-// ↓  блок с картинками
-
-const cardsList = new Section(
-  {
-    renderer: (data) => {
-      cardsList.addItem(addCard(data));
-    },
-  },
-  ".cards"
-);
-
-// ↓  приключения с отрисовкой карточек через API 
-// ↓  отрисовка
-
-apiNew.getCards() // result - готовые данные
-  .then((cards) => {
-    cardsList.renderItems(cards);
-}).catch((error) => {
-  console.log(error);
-});
 
 
 // ↓  новая форма add
