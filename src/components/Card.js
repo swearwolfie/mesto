@@ -60,7 +60,7 @@ export class Card {
    // ↓ скрыть корзину на чужих карточках
    _hideBin() {
     if (this._ownerId !== this._userId) {
-      this._deleteButton.style.display = 'none';
+      this._deleteButton.classList.add('cards__bin_hide');
     }
    }
 

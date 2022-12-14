@@ -14,11 +14,12 @@ const buttonChangeAvatar = document.querySelector(".profile__photo-edit-button")
 import { Card } from "../components/Card.js";
 import Section from "../components/Section.js";
 import { FormValidator } from "../components/FormValidator.js";
-import PicturePopup from "../components/PicturePopup.js";
+import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import { config } from "../utils/constants";
 import Api from "../components/Api";
+import PopupWithConfirmation from "../components/PopupWithConfirmation";
 
 
 // ↓  конфиг API
@@ -38,7 +39,6 @@ const popupAddValidation = new FormValidator(config, popupAdd);
 const popupChangeAvatarValidation = new FormValidator(config, popupAvatar);
 
 popupEditValidation.enableValidation();
-popupChangeAvatarValidation.enableValidation();
 
 // ↓ новая фигулина про юзера
 
@@ -58,7 +58,6 @@ const userInfo = new UserInfo({
   userDescription: ".profile__description",
   userAvatar: ".profile__photo"
 });
-
 // ↓ новая форма edit
 
 const editForm = new PopupWithForm({
@@ -68,12 +67,12 @@ const editForm = new PopupWithForm({
     apiNew.editProfile(data.profile, data.description) // data – содержимое инпутов, profile/description – name'ы инпутов из индекс.хтмл
     .then((submittedInfo) => {
       userInfo.setUserInfo(submittedInfo.name, submittedInfo.about);
+      editForm.closePopup();
     }).catch((error) => {
       console.log(error);
     }).finally(() => {
       editForm.renderLoading(false);
     })
-    editForm.closePopup();
   },
 });
 
@@ -97,16 +96,17 @@ const avatarPopup = new PopupWithForm({
     apiNew.changeAvatar(data.avatar)
     .then((res) => {
       userInfo.setUserAvatar(res.avatar);
+      avatarPopup.closePopup();
     })
     .catch((error) => { console.log(error) })
     .finally(() => {
       avatarPopup.renderLoading(false);
     })
-    avatarPopup.closePopup();
   }
   });
 
 avatarPopup.setEventListeners();
+popupChangeAvatarValidation.enableValidation();
 
 // ↓ активация кнопки editAvatar
 
@@ -116,7 +116,7 @@ buttonChangeAvatar.addEventListener("click", () => {
 
 // ↓ новая фигулина про картинки
 
-const picturePopup = new PicturePopup(".popup_pic");
+const picturePopup = new PopupWithImage(".popup_pic");
 picturePopup.setEventListeners();
 
 // ↓ и так понятно
@@ -127,7 +127,7 @@ function handleCardClick(title, link) {
 
 // ↓ новая форма для подтверждения удаления карточки 
 
-const confirmDeleteForm = new PopupWithForm({
+const confirmDeleteForm = new PopupWithConfirmation({
   popupSelector: '.popup_make-sure'
 })
 
@@ -171,11 +171,18 @@ function addCard(data) {
   handleCardClick,
   (id) => {
     confirmDeleteForm.openPopup();
-    confirmDeleteForm.changeSubmitHandler(() => {
+    confirmDeleteForm.setDeleteConfirmation(() => {
+      confirmDeleteForm.renderLoading(true);
       apiNew.deleteCard(id)
       .then((res) => {
         cardItem.handleDelete()
         confirmDeleteForm.closePopup()
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        confirmDeleteForm.renderLoading(false);
       }) 
       });
   },
@@ -232,7 +239,8 @@ const addForm = new PopupWithForm({
     addForm.renderLoading(true);
     apiNew.addNewCard(data.title, data.picture)
     .then((newCard) => {
-      cardsList.addItem(addCard(newCard))
+      cardsList.addItem(addCard(newCard));
+      addForm.closePopup();
     })
     .catch((error) => {
       console.log(error);
@@ -240,7 +248,6 @@ const addForm = new PopupWithForm({
     .finally(() => {
       addForm.renderLoading(false);
     })
-    addForm.closePopup();
   },
 });
 
